@@ -1,0 +1,223 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "labels": [
+                "Company"
+            ],
+            "properties": {
+                "name": "TechCorp",
+                "industry": "Technology",
+                "employees": 5000
+            }
+        },
+        {
+            "id": 2,
+            "labels": [
+                "Department"
+            ],
+            "properties": {
+                "name": "Engineering",
+                "budget": 2000000
+            }
+        },
+        {
+            "id": 3,
+            "labels": [
+                "Department"
+            ],
+            "properties": {
+                "name": "Marketing",
+                "budget": 500000
+            }
+        },
+        {
+            "id": 4,
+            "labels": [
+                "Department"
+            ],
+            "properties": {
+                "name": "Sales",
+                "budget": 750000
+            }
+        },
+        {
+            "id": 5,
+            "labels": [
+                "Employee"
+            ],
+            "properties": {
+                "name": "John Smith",
+                "title": "CEO",
+                "salary": 250000
+            }
+        },
+        {
+            "id": 6,
+            "labels": [
+                "Employee"
+            ],
+            "properties": {
+                "name": "Jane Doe",
+                "title": "CTO",
+                "salary": 200000
+            }
+        },
+        {
+            "id": 7,
+            "labels": [
+                "Employee"
+            ],
+            "properties": {
+                "name": "Mike Johnson",
+                "title": "Engineer",
+                "salary": 120000
+            }
+        },
+        {
+            "id": 8,
+            "labels": [
+                "Employee"
+            ],
+            "properties": {
+                "name": "Sarah Williams",
+                "title": "Designer",
+                "salary": 95000
+            }
+        },
+        {
+            "id": 9,
+            "labels": [
+                "Employee"
+            ],
+            "properties": {
+                "name": "Tom Brown",
+                "title": "Sales Rep",
+                "salary": 80000
+            }
+        },
+        {
+            "id": 10,
+            "labels": [
+                "Project"
+            ],
+            "properties": {
+                "name": "Product Launch",
+                "deadline": "2026-06-01",
+                "status": "active"
+            }
+        },
+        {
+            "id": 11,
+            "labels": [
+                "Project"
+            ],
+            "properties": {
+                "name": "Website Redesign",
+                "deadline": "2026-03-15",
+                "status": "active"
+            }
+        }
+    ],
+    "relationships": [
+        {
+            "id": 1,
+            "type": "HAS_DEPARTMENT",
+            "startNode": 1,
+            "endNode": 2,
+            "properties": {}
+        },
+        {
+            "id": 2,
+            "type": "HAS_DEPARTMENT",
+            "startNode": 1,
+            "endNode": 3,
+            "properties": {}
+        },
+        {
+            "id": 3,
+            "type": "HAS_DEPARTMENT",
+            "startNode": 1,
+            "endNode": 4,
+            "properties": {}
+        },
+        {
+            "id": 4,
+            "type": "WORKS_FOR",
+            "startNode": 5,
+            "endNode": 1,
+            "properties": {
+                "since": 2015
+            }
+        },
+        {
+            "id": 5,
+            "type": "WORKS_FOR",
+            "startNode": 6,
+            "endNode": 1,
+            "properties": {
+                "since": 2018
+            }
+        },
+        {
+            "id": 6,
+            "type": "WORKS_IN",
+            "startNode": 6,
+            "endNode": 2,
+            "properties": {}
+        },
+        {
+            "id": 7,
+            "type": "WORKS_IN",
+            "startNode": 7,
+            "endNode": 2,
+            "properties": {}
+        },
+        {
+            "id": 8,
+            "type": "WORKS_IN",
+            "startNode": 8,
+            "endNode": 3,
+            "properties": {}
+        },
+        {
+            "id": 9,
+            "type": "WORKS_IN",
+            "startNode": 9,
+            "endNode": 4,
+            "properties": {}
+        },
+        {
+            "id": 10,
+            "type": "MANAGES",
+            "startNode": 5,
+            "endNode": 6,
+            "properties": {}
+        },
+        {
+            "id": 11,
+            "type": "MANAGES",
+            "startNode": 6,
+            "endNode": 7,
+            "properties": {}
+        },
+        {
+            "id": 12,
+            "type": "ASSIGNED_TO",
+            "startNode": 7,
+            "endNode": 10,
+            "properties": {
+                "role": "Lead"
+            }
+        },
+        {
+            "id": 13,
+            "type": "ASSIGNED_TO",
+            "startNode": 8,
+            "endNode": 11,
+            "properties": {
+                "role": "Designer"
+            }
+        }
+    ]
+}

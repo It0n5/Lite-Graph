@@ -1,0 +1,120 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Alice",
+                "age": 30,
+                "city": "New York"
+            }
+        },
+        {
+            "id": 2,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Bob",
+                "age": 25,
+                "city": "Los Angeles"
+            }
+        },
+        {
+            "id": 3,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Charlie",
+                "age": 35,
+                "city": "Chicago"
+            }
+        },
+        {
+            "id": 4,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Diana",
+                "age": 28,
+                "city": "New York"
+            }
+        },
+        {
+            "id": 5,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Eve",
+                "age": 32,
+                "city": "San Francisco"
+            }
+        }
+    ],
+    "relationships": [
+        {
+            "id": 1,
+            "type": "KNOWS",
+            "startNode": 1,
+            "endNode": 2,
+            "properties": {
+                "since": 2018
+            }
+        },
+        {
+            "id": 2,
+            "type": "KNOWS",
+            "startNode": 1,
+            "endNode": 3,
+            "properties": {
+                "since": 2015
+            }
+        },
+        {
+            "id": 3,
+            "type": "KNOWS",
+            "startNode": 2,
+            "endNode": 4,
+            "properties": {
+                "since": 2020
+            }
+        },
+        {
+            "id": 4,
+            "type": "KNOWS",
+            "startNode": 3,
+            "endNode": 5,
+            "properties": {
+                "since": 2019
+            }
+        },
+        {
+            "id": 5,
+            "type": "KNOWS",
+            "startNode": 4,
+            "endNode": 5,
+            "properties": {
+                "since": 2021
+            }
+        },
+        {
+            "id": 6,
+            "type": "FOLLOWS",
+            "startNode": 1,
+            "endNode": 5,
+            "properties": {}
+        },
+        {
+            "id": 7,
+            "type": "FOLLOWS",
+            "startNode": 2,
+            "endNode": 1,
+            "properties": {}
+        }
+    ]
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiteGraph - Graph Database Console</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">◈</div>
+                <h1>LiteGraph</h1>
+                <span class="badge">Console</span>
+            </div>
+            <div class="header-stats" id="stats">
+                <div class="stat">
+                    <span class="stat-value" id="node-count">0</span>
+                    <span class="stat-label">Nodes</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="rel-count">0</span>
+                    <span class="stat-label">Relationships</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="label-count">0</span>
+                    <span class="stat-label">Labels</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Left Panel: Query Editor -->
+            <section class="panel query-panel">
+                <div class="panel-header">
+                    <h2>Query Editor</h2>
+                    <div class="panel-actions">
+                        <button class="btn btn-ghost" id="clear-btn" title="Clear query">
+                            <span class="icon">✕</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <textarea id="query-input" class="query-input" placeholder="Enter your Cypher query here...
+
+Example:
+CREATE (a:Person {name: 'Alice', age: 30})
+CREATE (b:Person {name: 'Bob', age: 25})
+CREATE (a)-[:KNOWS {since: 2020}]->(b)" spellcheck="false"></textarea>
+                    <div class="query-actions">
+                        <button class="btn btn-primary" id="run-btn">
+                            <span class="icon">▶</span>
+                            Run Query
+                        </button>
+                        <div class="sample-queries">
+                            <span class="label">Samples:</span>
+                            <button class="btn btn-chip" data-query="create-sample">Create Data</button>
+                            <button class="btn btn-chip" data-query="match-all">Match All</button>
+                            <button class="btn btn-chip" data-query="match-rel">Match Rels</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: Graph Visualization -->
+            <section class="panel graph-panel">
+                <div class="panel-header">
+                    <h2>Graph View</h2>
+                    <div class="panel-actions">
+                        <button class="btn btn-ghost" id="zoom-in-btn" title="Zoom In">+</button>
+                        <button class="btn btn-ghost" id="zoom-out-btn" title="Zoom Out">−</button>
+                        <button class="btn btn-ghost" id="recenter-btn" title="Recenter">◎</button>
+                    </div>
+                </div>
+                <div class="panel-content graph-container">
+                    <canvas id="graph-canvas"></canvas>
+                    <div class="graph-legend" id="graph-legend"></div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Results -->
+            <section class="panel results-panel">
+                <div class="panel-header">
+                    <h2>Results</h2>
+                    <div class="panel-actions">
+                        <span class="result-info" id="result-info"></span>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div id="results" class="results-container">
+                        <div class="empty-state">
+                            <div class="empty-icon">◇</div>
+                            <p>Run a query to see results</p>
+                            <span class="hint">Press Ctrl+Enter to execute</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Panel: Actions -->
+        <footer class="footer">
+            <div class="action-group">
+                <span class="group-label">Data</span>
+                <button class="btn btn-secondary" id="import-btn">
+                    <span class="icon">↑</span>
+                    Import
+                </button>
+                <button class="btn btn-secondary" id="export-btn">
+                    <span class="icon">↓</span>
+                    Export JSON
+                </button>
+            </div>
+            <div class="action-group">
+                <span class="group-label">Graph</span>
+                <button class="btn btn-secondary" id="load-sample-btn">
+                    <span class="icon">◎</span>
+                    Load Sample
+                </button>
+                <button class="btn btn-danger" id="clear-graph-btn">
+                    <span class="icon">⌫</span>
+                    Clear
+                </button>
+            </div>
+            <input type="file" id="file-input" accept=".json,.graphml" style="display: none;">
+        </footer>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="litegraph-browser.js?v=2"></script>
+    <script src="graph-viz.js?v=2"></script>
+    <script src="app.js?v=2"></script>
+</body>
+
+</html>

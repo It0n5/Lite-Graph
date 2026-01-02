@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="labels" for="node" attr.name="labels" attr.type="string"/>
+  <key id="node_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="node_type" for="node" attr.name="type" attr.type="string"/>
+  <key id="relationship_type" for="edge" attr.name="relationship_type" attr.type="string"/>
+  <key id="edge_weight" for="edge" attr.name="weight" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="n1">
+      <data key="labels">City</data>
+      <data key="node_name">San Francisco</data>
+      <data key="node_type">hub</data>
+    </node>
+    <node id="n2">
+      <data key="labels">City</data>
+      <data key="node_name">Los Angeles</data>
+      <data key="node_type">hub</data>
+    </node>
+    <node id="n3">
+      <data key="labels">City</data>
+      <data key="node_name">Seattle</data>
+      <data key="node_type">hub</data>
+    </node>
+    <node id="n4">
+      <data key="labels">City</data>
+      <data key="node_name">Portland</data>
+      <data key="node_type">regional</data>
+    </node>
+    <node id="n5">
+      <data key="labels">City</data>
+      <data key="node_name">Las Vegas</data>
+      <data key="node_type">regional</data>
+    </node>
+    <node id="n6">
+      <data key="labels">City</data>
+      <data key="node_name">Phoenix</data>
+      <data key="node_type">regional</data>
+    </node>
+    <edge id="e1" source="n1" target="n2">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">383</data>
+    </edge>
+    <edge id="e2" source="n1" target="n3">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">808</data>
+    </edge>
+    <edge id="e3" source="n1" target="n4">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">640</data>
+    </edge>
+    <edge id="e4" source="n2" target="n5">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">270</data>
+    </edge>
+    <edge id="e5" source="n2" target="n6">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">370</data>
+    </edge>
+    <edge id="e6" source="n3" target="n4">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">175</data>
+    </edge>
+    <edge id="e7" source="n5" target="n6">
+      <data key="relationship_type">CONNECTED_TO</data>
+      <data key="edge_weight">300</data>
+    </edge>
+  </graph>
+</graphml>

@@ -1,0 +1,148 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "labels": [
+                "Movie"
+            ],
+            "properties": {
+                "title": "The Matrix",
+                "year": 1999,
+                "genre": "Sci-Fi"
+            }
+        },
+        {
+            "id": 2,
+            "labels": [
+                "Movie"
+            ],
+            "properties": {
+                "title": "John Wick",
+                "year": 2014,
+                "genre": "Action"
+            }
+        },
+        {
+            "id": 3,
+            "labels": [
+                "Movie"
+            ],
+            "properties": {
+                "title": "Speed",
+                "year": 1994,
+                "genre": "Action"
+            }
+        },
+        {
+            "id": 4,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Keanu Reeves",
+                "born": 1964
+            }
+        },
+        {
+            "id": 5,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Laurence Fishburne",
+                "born": 1961
+            }
+        },
+        {
+            "id": 6,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Carrie-Anne Moss",
+                "born": 1967
+            }
+        },
+        {
+            "id": 7,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Lana Wachowski",
+                "born": 1965
+            }
+        },
+        {
+            "id": 8,
+            "labels": [
+                "Person"
+            ],
+            "properties": {
+                "name": "Lilly Wachowski",
+                "born": 1967
+            }
+        }
+    ],
+    "relationships": [
+        {
+            "id": 1,
+            "type": "ACTED_IN",
+            "startNode": 4,
+            "endNode": 1,
+            "properties": {
+                "role": "Neo"
+            }
+        },
+        {
+            "id": 2,
+            "type": "ACTED_IN",
+            "startNode": 5,
+            "endNode": 1,
+            "properties": {
+                "role": "Morpheus"
+            }
+        },
+        {
+            "id": 3,
+            "type": "ACTED_IN",
+            "startNode": 6,
+            "endNode": 1,
+            "properties": {
+                "role": "Trinity"
+            }
+        },
+        {
+            "id": 4,
+            "type": "DIRECTED",
+            "startNode": 7,
+            "endNode": 1,
+            "properties": {}
+        },
+        {
+            "id": 5,
+            "type": "DIRECTED",
+            "startNode": 8,
+            "endNode": 1,
+            "properties": {}
+        },
+        {
+            "id": 6,
+            "type": "ACTED_IN",
+            "startNode": 4,
+            "endNode": 2,
+            "properties": {
+                "role": "John Wick"
+            }
+        },
+        {
+            "id": 7,
+            "type": "ACTED_IN",
+            "startNode": 4,
+            "endNode": 3,
+            "properties": {
+                "role": "Jack Traven"
+            }
+        }
+    ]
+}
