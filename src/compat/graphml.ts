@@ -6,12 +6,20 @@
 import { Graph } from '../core/storage';
 import { Node, Relationship } from '../core/graph';
 import * as fs from 'fs';
+import { sanitizePath, validateXmlLength, sanitizeProperties } from '../utils/security';
 
 export class GraphMLCompat {
     private graph: Graph;
+    private allowedBaseDir?: string;
 
-    constructor(graph: Graph) {
+    /**
+     * Create a new GraphMLCompat instance.
+     * @param graph - The graph to export/import
+     * @param allowedBaseDir - Optional base directory to restrict file operations to
+     */
+    constructor(graph: Graph, allowedBaseDir?: string) {
         this.graph = graph;
+        this.allowedBaseDir = allowedBaseDir;
     }
 
     // ==================== Export ====================
@@ -82,14 +90,19 @@ export class GraphMLCompat {
     }
 
     /** Export graph to a file */
-    exportToFile(path: string): void {
-        fs.writeFileSync(path, this.exportToString(), 'utf-8');
+    exportToFile(filePath: string): void {
+        // Validate path to prevent path traversal attacks
+        const safePath = sanitizePath(filePath, this.allowedBaseDir);
+        fs.writeFileSync(safePath, this.exportToString(), 'utf-8');
     }
 
     // ==================== Import ====================
 
     /** Import graph from GraphML XML string */
     importFromString(xml: string, clearExisting: boolean = true): void {
+        // Validate input length to prevent DoS attacks
+        validateXmlLength(xml);
+
         if (clearExisting) {
             this.graph.clear();
         }
@@ -181,8 +194,10 @@ export class GraphMLCompat {
     }
 
     /** Import graph from a file */
-    importFromFile(path: string, clearExisting: boolean = true): void {
-        const xml = fs.readFileSync(path, 'utf-8');
+    importFromFile(filePath: string, clearExisting: boolean = true): void {
+        // Validate path to prevent path traversal attacks
+        const safePath = sanitizePath(filePath, this.allowedBaseDir);
+        const xml = fs.readFileSync(safePath, 'utf-8');
         this.importFromString(xml, clearExisting);
     }
 

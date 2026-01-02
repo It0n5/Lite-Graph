@@ -15,6 +15,7 @@
  */
 
 import { Node, Relationship, QueryResult } from './graph';
+import { sanitizeProperties } from '../utils/security';
 
 /**
  * Main graph database container class.
@@ -97,8 +98,10 @@ export class Graph {
      * ```
      */
     createNode(labels: string[] = [], properties: Record<string, any> = {}): Node {
+        // Sanitize properties to prevent prototype pollution
+        const safeProperties = sanitizeProperties(properties);
         // Create node with auto-incremented ID
-        const node = new Node(this.nextNodeId++, labels, properties);
+        const node = new Node(this.nextNodeId++, labels, safeProperties);
         this.nodes.set(node.id, node);
 
         // Update label index for fast lookups
@@ -236,8 +239,10 @@ export class Graph {
         type: string,
         properties: Record<string, any> = {}
     ): Relationship {
+        // Sanitize properties to prevent prototype pollution
+        const safeProperties = sanitizeProperties(properties);
         // Create relationship with auto-incremented ID
-        const rel = new Relationship(this.nextRelationshipId++, type, startNode, endNode, properties);
+        const rel = new Relationship(this.nextRelationshipId++, type, startNode, endNode, safeProperties);
         this.relationships.set(rel.id, rel);
 
         // Add to both nodes' relationship lists (enables index-free adjacency)

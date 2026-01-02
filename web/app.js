@@ -5,11 +5,21 @@
  * It provides query execution, result display, and import/export functionality.
  */
 
+// ==================== Configuration ====================
+const CONFIG = {
+    DEBUG: false,  // Set to true for development, false for production
+    MAX_QUERY_LENGTH: 100000  // Maximum allowed query length (100KB)
+};
+
 // ==================== Debug Logging ====================
-console.log('🚀 LiteGraph app.js loading...');
+// Configurable logging that can be disabled in production
+const log = CONFIG.DEBUG ? console.log.bind(console) : () => { };
+const warn = CONFIG.DEBUG ? console.warn.bind(console) : () => { };
 
 window.onerror = function (msg, url, line, col, error) {
-    console.error('❌ Global error:', msg, 'at', url, 'line', line);
+    if (CONFIG.DEBUG) {
+        console.error('❌ Global error:', msg, 'at', url, 'line', line);
+    }
     return false;
 };
 
@@ -17,9 +27,9 @@ window.onerror = function (msg, url, line, col, error) {
 function safeAddEventListener(element, event, handler, name) {
     if (element) {
         element.addEventListener(event, handler);
-        console.log(`✅ Event listener added: ${name}`);
+        log(`✅ Event listener added: ${name}`);
     } else {
-        console.warn(`⚠️ Element not found for: ${name}`);
+        warn(`⚠️ Element not found for: ${name}`);
     }
 }
 
@@ -635,6 +645,12 @@ function runQuery() {
     const query = elements.queryInput.value.trim();
     if (!query) return;
 
+    // Validate query length to prevent DoS attacks
+    if (query.length > CONFIG.MAX_QUERY_LENGTH) {
+        displayError(new Error(`Query exceeds maximum allowed length of ${CONFIG.MAX_QUERY_LENGTH} characters`));
+        return;
+    }
+
     try {
         const startTime = performance.now();
         const result = engine.execute(query);
@@ -804,23 +820,23 @@ function loadSampleData() {
 }
 
 // ==================== Event Listeners ====================
-console.log('📌 Setting up event listeners...');
-console.log('Elements found:', Object.keys(elements).map(k => `${k}: ${elements[k] ? '✅' : '❌'}`).join(', '));
+log('📌 Setting up event listeners...');
+log('Elements found:', Object.keys(elements).map(k => `${k}: ${elements[k] ? '✅' : '❌'}`).join(', '));
 
 safeAddEventListener(elements.runBtn, 'click', () => {
-    console.log('🔵 Run button clicked');
+    log('🔵 Run button clicked');
     runQuery();
 }, 'runBtn');
 
 safeAddEventListener(elements.clearBtn, 'click', () => {
-    console.log('🔵 Clear query button clicked');
+    log('🔵 Clear query button clicked');
     elements.queryInput.value = '';
     elements.queryInput.focus();
 }, 'clearBtn');
 
 safeAddEventListener(elements.queryInput, 'keydown', (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
-        console.log('🔵 Ctrl+Enter pressed');
+        log('🔵 Ctrl+Enter pressed');
         runQuery();
     }
 }, 'queryInput keydown');
@@ -828,34 +844,34 @@ safeAddEventListener(elements.queryInput, 'keydown', (e) => {
 document.querySelectorAll('[data-query]').forEach((btn, i) => {
     btn.addEventListener('click', () => {
         const queryKey = btn.dataset.query;
-        console.log('🔵 Sample query button clicked:', queryKey);
+        log('🔵 Sample query button clicked:', queryKey);
         elements.queryInput.value = SAMPLE_QUERIES[queryKey];
     });
-    console.log(`✅ Sample query button ${i} wired`);
+    log(`✅ Sample query button ${i} wired`);
 });
 
 safeAddEventListener(elements.importBtn, 'click', () => {
-    console.log('🔵 Import button clicked');
+    log('🔵 Import button clicked');
     elements.fileInput.click();
 }, 'importBtn');
 
 safeAddEventListener(elements.fileInput, 'change', (e) => {
-    console.log('🔵 File selected');
+    log('🔵 File selected');
     if (e.target.files[0]) importFile(e.target.files[0]);
 }, 'fileInput');
 
 safeAddEventListener(elements.exportBtn, 'click', () => {
-    console.log('🔵 Export button clicked');
+    log('🔵 Export button clicked');
     exportJSON();
 }, 'exportBtn');
 
 safeAddEventListener(elements.loadSampleBtn, 'click', () => {
-    console.log('🔵 Load Sample button clicked');
+    log('🔵 Load Sample button clicked');
     loadSampleData();
 }, 'loadSampleBtn');
 
 safeAddEventListener(elements.clearGraphBtn, 'click', () => {
-    console.log('🔵 Clear Graph button clicked');
+    log('🔵 Clear Graph button clicked');
     if (confirm('Clear all data from the graph?')) {
         graph.clear();
         updateStats();
@@ -864,7 +880,7 @@ safeAddEventListener(elements.clearGraphBtn, 'click', () => {
     }
 }, 'clearGraphBtn');
 
-console.log('✅ Event listeners setup complete');
+log('✅ Event listeners setup complete');
 
 // ==================== Graph Visualizer ====================
 let graphViz = null;
@@ -893,5 +909,5 @@ initGraphViz();
 // Initial stats update
 updateStats();
 
-console.log('LiteGraph Web Console loaded with Graph Visualization');
+log('LiteGraph Web Console loaded with Graph Visualization');
 

@@ -21,6 +21,8 @@
  * @module cypher/lexer
  */
 
+import { createSafeError, validateQueryLength } from '../utils/security';
+
 /**
  * Enum of all possible token types.
  * 
@@ -195,6 +197,8 @@ export class Lexer {
      * @param input - The Cypher query string to tokenize
      */
     constructor(input: string) {
+        // Validate input length to prevent DoS attacks
+        validateQueryLength(input);
         this.input = input;
     }
 
@@ -292,7 +296,11 @@ export class Lexer {
             }
 
             // If we get here, it's an unexpected character
-            throw new Error(`Unexpected character '${char}' at position ${this.position}`);
+            throw createSafeError(
+                `Unexpected character '${char}' at position ${this.position}`,
+                'Invalid character in query',
+                'Lexer'
+            );
         }
 
         // Add the EOF token to signal end of input
@@ -363,7 +371,11 @@ export class Lexer {
 
         // Check for unterminated string
         if (this.position >= this.input.length) {
-            throw new Error(`Unterminated string at position ${start}`);
+            throw createSafeError(
+                `Unterminated string at position ${start}`,
+                'Unterminated string literal',
+                'Lexer'
+            );
         }
 
         this.position++; // Skip closing quote

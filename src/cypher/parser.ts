@@ -40,6 +40,7 @@ import {
     Expression, Literal, Identifier, PropertyAccess, BinaryExpression,
     ReturnItem, SetItem, PatternElement
 } from './ast';
+import { createSafeError } from '../utils/security';
 
 /**
  * Recursive descent parser for Cypher queries.
@@ -641,12 +642,17 @@ export class Parser {
 
     /**
      * Create a parse error with position information.
+     * Logs detailed error internally, returns sanitized message to user.
      * 
      * @param message - Error message
-     * @returns Error object with position info
+     * @returns Error object with sanitized message
      */
     private error(message: string): Error {
         const token = this.peek();
-        return new Error(`Parse error at position ${token.position}: ${message}`);
+        return createSafeError(
+            `Parse error at position ${token.position}: ${message}`,
+            'Query syntax error',
+            'Parser'
+        );
     }
 }

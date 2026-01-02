@@ -6,6 +6,7 @@
 import { Graph } from '../core/storage';
 import { Node, Relationship } from '../core/graph';
 import * as fs from 'fs';
+import { sanitizePath, safeJsonParse, validateJsonLength, sanitizeProperties } from '../utils/security';
 
 /** Neo4j APOC export format */
 export interface Neo4jJsonFormat {
@@ -29,9 +30,16 @@ export interface Neo4jRelationshipJson {
 
 export class JsonCompat {
     private graph: Graph;
+    private allowedBaseDir?: string;
 
-    constructor(graph: Graph) {
+    /**
+     * Create a new JsonCompat instance.
+     * @param graph - The graph to export/import
+     * @param allowedBaseDir - Optional base directory to restrict file operations to
+     */
+    constructor(graph: Graph, allowedBaseDir?: string) {
         this.graph = graph;
+        this.allowedBaseDir = allowedBaseDir;
     }
 
     // ==================== Export ====================
@@ -61,8 +69,10 @@ export class JsonCompat {
     }
 
     /** Export graph to a file */
-    exportToFile(path: string, pretty: boolean = true): void {
-        fs.writeFileSync(path, this.exportToString(pretty), 'utf-8');
+    exportToFile(filePath: string, pretty: boolean = true): void {
+        // Validate path to prevent path traversal attacks
+        const safePath = sanitizePath(filePath, this.allowedBaseDir);
+        fs.writeFileSync(safePath, this.exportToString(pretty), 'utf-8');
     }
 
     // ==================== Import ====================
@@ -101,13 +111,16 @@ export class JsonCompat {
 
     /** Import graph from JSON string */
     importFromString(json: string, clearExisting: boolean = true): void {
-        const data = JSON.parse(json) as Neo4jJsonFormat;
+        // Use safe JSON parsing to prevent prototype pollution
+        const data = safeJsonParse<Neo4jJsonFormat>(json);
         this.importFromObject(data, clearExisting);
     }
 
     /** Import graph from a file */
-    importFromFile(path: string, clearExisting: boolean = true): void {
-        const json = fs.readFileSync(path, 'utf-8');
+    importFromFile(filePath: string, clearExisting: boolean = true): void {
+        // Validate path to prevent path traversal attacks
+        const safePath = sanitizePath(filePath, this.allowedBaseDir);
+        const json = fs.readFileSync(safePath, 'utf-8');
         this.importFromString(json, clearExisting);
     }
 

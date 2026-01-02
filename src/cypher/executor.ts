@@ -34,6 +34,7 @@ import {
     SetClause, DeleteClause, PatternNode, NodePattern, RelationshipPattern,
     Expression, Literal, Identifier, PropertyAccess, BinaryExpression, PatternElement
 } from './ast';
+import { validateQueryLength, createSafeError } from '../utils/security';
 
 /**
  * Represents a single row of variable bindings during query execution.
@@ -89,6 +90,9 @@ export class Executor {
      * @returns QueryResult with records and mutation summary
      */
     execute(query: string): QueryResult {
+        // Validate query length to prevent DoS attacks
+        validateQueryLength(query);
+
         // Parse the query into an AST
         const ast = this.parser.parse(query);
         // Execute the AST against the graph
