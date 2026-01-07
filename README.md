@@ -1,4 +1,4 @@
-# LiteGraph
+# Neo4ai
 
 <div align="center">
 
